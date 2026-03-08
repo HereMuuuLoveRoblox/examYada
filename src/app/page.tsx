@@ -12,12 +12,21 @@ export default function HomePage() {
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [quizActive, setQuizActive] = useState(false);
   const [confirmReset, setConfirmReset] = useState(false);
+  const [questionCount, setQuestionCount] = useState<number>(10);
 
   useEffect(() => {
     setSets(loadQuizData().sets);
   }, []);
 
   const selectedSet = sets.find((s) => s.id === selectedId);
+  const maxQuestions = selectedSet?.questions.length ?? 0;
+
+  // Keep questionCount in valid range when set changes
+  useEffect(() => {
+    if (maxQuestions > 0) {
+      setQuestionCount((prev) => Math.min(prev, maxQuestions));
+    }
+  }, [maxQuestions]);
 
   const handleStartQuiz = () => {
     if (!selectedSet || selectedSet.questions.length === 0) return;
@@ -38,6 +47,7 @@ export default function HomePage() {
       <div className="min-h-screen p-4 max-w-2xl mx-auto">
         <ImageQuiz
           quizSet={selectedSet}
+          questionCount={questionCount}
           onExit={() => {
             setQuizActive(false);
             setSets(loadQuizData().sets);
@@ -66,6 +76,58 @@ export default function HomePage() {
           onSelect={setSelectedId}
         />
       </section>
+
+      {/* Question count selector — only shown when a set is selected */}
+      {selectedSet && maxQuestions > 0 && (
+        <section className="space-y-3">
+          <div className="flex items-center justify-between">
+            <h2 className="text-xl font-semibold">จำนวนข้อที่ต้องการทำ</h2>
+            <span className="text-2xl font-bold text-blue-600">{questionCount}</span>
+          </div>
+          <input
+            type="range"
+            min={1}
+            max={maxQuestions}
+            value={questionCount}
+            onChange={(e) => setQuestionCount(Number(e.target.value))}
+            className="w-full h-3 rounded-full accent-blue-600 cursor-pointer"
+          />
+          <div className="flex justify-between text-xs text-gray-400">
+            <span>1 ข้อ</span>
+            <span>ทั้งหมด {maxQuestions} ข้อ</span>
+          </div>
+          {/* Quick-pick buttons */}
+          <div className="flex flex-wrap gap-2">
+            {[5, 10, 20, 30].filter((n) => n <= maxQuestions).map((n) => (
+              <button
+                key={n}
+                type="button"
+                onClick={() => setQuestionCount(n)}
+                className={`py-1.5 px-4 rounded-lg text-sm font-medium transition-colors
+                  ${
+                    questionCount === n
+                      ? "bg-blue-600 text-white"
+                      : "bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700"
+                  }`}
+              >
+                {n} ข้อ
+              </button>
+            ))}
+            <button
+              type="button"
+              onClick={() => setQuestionCount(maxQuestions)}
+              className={`py-1.5 px-4 rounded-lg text-sm font-medium transition-colors
+                ${
+                  questionCount === maxQuestions
+                    ? "bg-blue-600 text-white"
+                    : "bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700"
+                }`}
+            >
+              ทั้งหมด
+            </button>
+          </div>
+        </section>
+      )}
 
       {/* Action buttons */}
       <div className="grid gap-3 sm:grid-cols-2">

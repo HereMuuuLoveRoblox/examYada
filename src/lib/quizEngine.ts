@@ -1,13 +1,16 @@
 import { Question, QuizSession } from "@/types/quiz";
 
-/** Create a new quiz session with shuffled question indices */
-export function createSession(questions: Question[]): QuizSession {
+/** Create a new quiz session with shuffled question indices.
+ *  @param count - how many questions to include (defaults to all) */
+export function createSession(questions: Question[], count?: number): QuizSession {
+  const total = Math.min(count ?? questions.length, questions.length);
   const indices = questions.map((_, i) => i);
   shuffle(indices);
+  const selected = indices.slice(0, total);
   return {
-    remaining: indices.slice(1),
-    currentIndex: indices[0] ?? -1,
-    totalQuestions: questions.length,
+    remaining: selected.slice(1),
+    currentIndex: selected[0] ?? -1,
+    totalQuestions: total,
     correctCount: 0,
     answeredCount: 0,
   };

@@ -7,21 +7,23 @@ import AnswerInput from "./AnswerInput";
 
 interface Props {
   quizSet: QuizSet;
+  questionCount: number;
   onExit: () => void;
 }
 
 type Feedback = "correct" | "wrong" | null;
 
-export default function ImageQuiz({ quizSet, onExit }: Props) {
+export default function ImageQuiz({ quizSet, questionCount, onExit }: Props) {
   const [session, setSession] = useState<QuizSession>(() =>
-    createSession(quizSet.questions)
+    createSession(quizSet.questions, questionCount)
   );
   const [feedback, setFeedback] = useState<Feedback>(null);
   const [revealed, setRevealed] = useState(false);
   const [finished, setFinished] = useState(false);
   // Random image picked fresh for each question shown
   const [currentImage, setCurrentImage] = useState<string>(() => {
-    const q = quizSet.questions[createSession(quizSet.questions).currentIndex];
+    const init = createSession(quizSet.questions, questionCount);
+    const q = quizSet.questions[init.currentIndex];
     return q ? pickRandomImage(q) : "";
   });
 
@@ -80,7 +82,7 @@ export default function ImageQuiz({ quizSet, onExit }: Props) {
         <div className="flex flex-col sm:flex-row gap-3 justify-center">
           <button
             onClick={() => {
-              const newSession = createSession(quizSet.questions);
+              const newSession = createSession(quizSet.questions, questionCount);
               const firstQ = quizSet.questions[newSession.currentIndex];
               if (firstQ) setCurrentImage(pickRandomImage(firstQ));
               setSession(newSession);
