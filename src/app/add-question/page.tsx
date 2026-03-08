@@ -22,8 +22,8 @@ function AddQuestionContent() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [setId]);
 
-  const handleAdd = (image: string, answers: string[]) => {
-    addQuestion(setId, image, answers);
+  const handleAdd = (images: string[], answers: string[]) => {
+    addQuestion(setId, images, answers);
     reload();
   };
 
@@ -79,12 +79,15 @@ function AddQuestionContent() {
               >
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
-                  src={q.image}
+                  src={q.images[0]}
                   alt={`Question ${i + 1}`}
                   className="w-full h-40 object-cover bg-gray-100 dark:bg-gray-800"
                   loading="lazy"
                 />
                 <div className="p-3 space-y-2">
+                  <p className="text-xs text-gray-500">
+                    {q.images.length} รูป (สุ่มมา 1 รูปตอนสอบ)
+                  </p>
                   <p className="text-sm">
                     <span className="font-medium">คำตอบ: </span>
                     {q.answers.join(", ")}

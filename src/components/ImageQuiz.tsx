@@ -2,7 +2,7 @@
 
 import { useState, useCallback } from "react";
 import { Question, QuizSet, QuizSession } from "@/types/quiz";
-import { createSession, nextQuestion, checkAnswer } from "@/lib/quizEngine";
+import { createSession, nextQuestion, checkAnswer, pickRandomImage } from "@/lib/quizEngine";
 import AnswerInput from "./AnswerInput";
 
 interface Props {
@@ -19,6 +19,11 @@ export default function ImageQuiz({ quizSet, onExit }: Props) {
   const [feedback, setFeedback] = useState<Feedback>(null);
   const [revealed, setRevealed] = useState(false);
   const [finished, setFinished] = useState(false);
+  // Random image picked fresh for each question shown
+  const [currentImage, setCurrentImage] = useState<string>(() => {
+    const q = quizSet.questions[createSession(quizSet.questions).currentIndex];
+    return q ? pickRandomImage(q) : "";
+  });
 
   const currentQuestion: Question | undefined =
     quizSet.questions[session.currentIndex];
@@ -47,10 +52,13 @@ export default function ImageQuiz({ quizSet, onExit }: Props) {
       setFinished(true);
       return;
     }
+    // Pick a fresh random image for the next question
+    const nextQ = quizSet.questions[updated.currentIndex];
+    if (nextQ) setCurrentImage(pickRandomImage(nextQ));
     setSession(updated);
     setFeedback(null);
     setRevealed(false);
-  }, [session]);
+  }, [session, quizSet.questions]);
 
   const handleSkip = useCallback(() => {
     setSession((s) => ({ ...s, answeredCount: s.answeredCount + 1 }));
@@ -72,7 +80,10 @@ export default function ImageQuiz({ quizSet, onExit }: Props) {
         <div className="flex flex-col sm:flex-row gap-3 justify-center">
           <button
             onClick={() => {
-              setSession(createSession(quizSet.questions));
+              const newSession = createSession(quizSet.questions);
+              const firstQ = quizSet.questions[newSession.currentIndex];
+              if (firstQ) setCurrentImage(pickRandomImage(firstQ));
+              setSession(newSession);
               setFeedback(null);
               setRevealed(false);
               setFinished(false);
@@ -114,7 +125,7 @@ export default function ImageQuiz({ quizSet, onExit }: Props) {
         <div className="rounded-xl overflow-hidden border border-gray-200 dark:border-gray-700 max-w-md w-full">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
-            src={currentQuestion.image}
+            src={currentImage}
             alt="Quiz question"
             className="w-full h-auto max-h-[50vh] object-contain bg-gray-100 dark:bg-gray-800"
             loading="lazy"

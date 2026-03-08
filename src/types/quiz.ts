@@ -1,8 +1,8 @@
-/** Represents a single quiz question with an image and accepted answers */
+/** Represents a single quiz question with multiple images and accepted answers */
 export interface Question {
   id: string;
-  /** Base64-encoded image data */
-  image: string;
+  /** Array of base64-encoded images (one is randomly picked per quiz attempt) */
+  images: string[];
   /** List of accepted answers (case-insensitive comparison) */
   answers: string[];
 }

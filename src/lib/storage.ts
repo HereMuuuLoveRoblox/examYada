@@ -46,10 +46,10 @@ export function deleteQuizSet(setId: string): void {
   saveQuizData(data);
 }
 
-/** Add a question to a quiz set */
+/** Add a question to a quiz set (supports multiple images per question) */
 export function addQuestion(
   setId: string,
-  image: string,
+  images: string[],
   answers: string[]
 ): Question {
   const data = loadQuizData();
@@ -58,7 +58,7 @@ export function addQuestion(
 
   const question: Question = {
     id: generateId(),
-    image,
+    images,
     answers: answers.map((a) => a.trim()).filter(Boolean),
   };
   set.questions.push(question);

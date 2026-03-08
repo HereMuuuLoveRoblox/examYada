@@ -30,6 +30,12 @@ export function checkAnswer(question: Question, userAnswer: string): boolean {
   return question.answers.some((a) => a.trim().toLowerCase() === normalised);
 }
 
+/** Pick a random image from a question's images array */
+export function pickRandomImage(question: Question): string {
+  const idx = Math.floor(Math.random() * question.images.length);
+  return question.images[idx];
+}
+
 /** Fisher-Yates shuffle (in-place) */
 function shuffle<T>(arr: T[]): T[] {
   for (let i = arr.length - 1; i > 0; i--) {
