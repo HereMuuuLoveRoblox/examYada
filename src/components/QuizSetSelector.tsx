@@ -12,7 +12,7 @@ export default function QuizSetSelector({ sets, selectedId, onSelect }: Props) {
   if (sets.length === 0) {
     return (
       <p className="text-gray-500 dark:text-gray-400 text-center py-8">
-        No quiz sets yet. Create one in Manage Sets.
+        ยังไม่มีชุดข้อสอบ กรุณาสร้างใหม่ในหน้า &quot;จัดการชุดข้อสอบ&quot;
       </p>
     );
   }
@@ -32,7 +32,7 @@ export default function QuizSetSelector({ sets, selectedId, onSelect }: Props) {
         >
           <span className="font-semibold text-lg">{set.name}</span>
           <span className="ml-2 text-sm text-gray-500">
-            ({set.questions.length} question{set.questions.length !== 1 ? "s" : ""})
+            ({set.questions.length} ข้อ)
           </span>
         </button>
       ))}

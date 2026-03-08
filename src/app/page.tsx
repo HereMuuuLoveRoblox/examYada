@@ -53,13 +53,13 @@ export default function HomePage() {
       <header className="text-center pt-6">
         <h1 className="text-4xl font-bold tracking-tight">ExamYada</h1>
         <p className="text-gray-500 dark:text-gray-400 mt-2">
-          Image-based quiz maker &amp; tester
+          สร้างและฝึกทดสอบความจำด้วยรูปภาพ
         </p>
       </header>
 
       {/* Quiz set selector */}
       <section className="space-y-4">
-        <h2 className="text-xl font-semibold">Select Quiz Set</h2>
+        <h2 className="text-xl font-semibold">เลือกชุดข้อสอบ</h2>
         <QuizSetSelector
           sets={sets}
           selectedId={selectedId}
@@ -75,14 +75,14 @@ export default function HomePage() {
           className="py-4 px-6 bg-green-600 hover:bg-green-700 text-white font-semibold
             rounded-xl text-lg transition-colors disabled:opacity-50"
         >
-          Start Quiz
+          เริ่มทำข้อสอบ
         </button>
         <Link
           href="/manage"
           className="py-4 px-6 bg-blue-600 hover:bg-blue-700 text-white font-semibold
             rounded-xl text-lg transition-colors text-center"
         >
-          Manage Sets
+          จัดการชุดข้อสอบ
         </Link>
       </div>
 
@@ -95,25 +95,25 @@ export default function HomePage() {
               dark:text-red-400 font-semibold rounded-xl transition-colors
               hover:bg-red-200 dark:hover:bg-red-900/50"
           >
-            Reset All Data
+            ลบข้อมูลทั้งหมด
           </button>
         ) : (
           <div className="space-y-2">
             <p className="text-red-600 dark:text-red-400 text-sm font-medium text-center">
-              This will permanently delete all quiz sets and questions.
+              การดำเนินการนี้จะลบชุดข้อสอบและคำถามทั้งหมดอย่างถาวร
             </p>
             <div className="grid grid-cols-2 gap-3">
               <button
                 onClick={handleReset}
                 className="py-3 px-6 bg-red-600 hover:bg-red-700 text-white font-semibold rounded-xl transition-colors"
               >
-                Confirm Reset
+                ยืนยันการลบ
               </button>
               <button
                 onClick={() => setConfirmReset(false)}
                 className="py-3 px-6 bg-gray-200 dark:bg-gray-700 font-semibold rounded-xl transition-colors hover:bg-gray-300 dark:hover:bg-gray-600"
               >
-                Cancel
+                ยกเลิก
               </button>
             </div>
           </div>

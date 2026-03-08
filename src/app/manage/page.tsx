@@ -29,13 +29,13 @@ export default function ManagePage() {
   return (
     <div className="min-h-screen p-4 max-w-2xl mx-auto space-y-8">
       <header className="flex items-center justify-between pt-6">
-        <h1 className="text-3xl font-bold">Manage Quiz Sets</h1>
+        <h1 className="text-3xl font-bold">จัดการชุดข้อสอบ</h1>
         <Link
           href="/"
           className="py-2 px-4 bg-gray-200 dark:bg-gray-700 rounded-lg font-medium
             hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors"
         >
-          ← Home
+          ← หน้าหลัก
         </Link>
       </header>
 
@@ -45,7 +45,7 @@ export default function ManagePage() {
           type="text"
           value={newName}
           onChange={(e) => setNewName(e.target.value)}
-          placeholder="New quiz set name…"
+          placeholder="ชื่อชุดข้อสอบใหม่…"
           className="flex-1 px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600
             bg-white dark:bg-gray-800 text-base focus:ring-2 focus:ring-blue-500
             focus:border-transparent outline-none"
@@ -56,14 +56,14 @@ export default function ManagePage() {
           className="py-3 px-6 bg-blue-600 hover:bg-blue-700 text-white font-semibold
             rounded-xl transition-colors disabled:opacity-50 shrink-0"
         >
-          Create
+          สร้าง
         </button>
       </form>
 
       {/* List of sets */}
       {sets.length === 0 ? (
         <p className="text-gray-500 dark:text-gray-400 text-center py-8">
-          No quiz sets yet. Create one above.
+          ยังไม่มีชุดข้อสอบ กรุณาสร้างใหม่ด้านบน
         </p>
       ) : (
         <div className="space-y-3">
@@ -76,7 +76,7 @@ export default function ManagePage() {
               <div>
                 <p className="font-semibold text-lg">{set.name}</p>
                 <p className="text-sm text-gray-500">
-                  {set.questions.length} question{set.questions.length !== 1 ? "s" : ""}
+                  {set.questions.length} ข้อ
                 </p>
               </div>
               <div className="flex gap-2">
@@ -85,7 +85,7 @@ export default function ManagePage() {
                   className="py-2 px-4 bg-green-600 hover:bg-green-700 text-white text-sm
                     font-semibold rounded-lg transition-colors"
                 >
-                  Add Questions
+                  เพิ่มคำถาม
                 </Link>
                 <button
                   onClick={() => handleDelete(set.id)}
@@ -93,7 +93,7 @@ export default function ManagePage() {
                     dark:text-red-400 text-sm font-semibold rounded-lg transition-colors
                     hover:bg-red-200 dark:hover:bg-red-900/50"
                 >
-                  Delete
+                  ลบ
                 </button>
               </div>
             </div>

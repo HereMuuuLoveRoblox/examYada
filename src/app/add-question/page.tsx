@@ -35,9 +35,9 @@ function AddQuestionContent() {
   if (!setId || !quizSet) {
     return (
       <div className="min-h-screen p-4 max-w-2xl mx-auto pt-12 text-center">
-        <p className="text-gray-500">Quiz set not found.</p>
+        <p className="text-gray-500">ไม่พบชุดข้อสอบนี้</p>
         <Link href="/manage" className="text-blue-600 underline mt-4 inline-block">
-          Back to Manage
+          กลับไปจัดการชุดข้อสอบ
         </Link>
       </div>
     );
@@ -49,7 +49,7 @@ function AddQuestionContent() {
         <div>
           <h1 className="text-3xl font-bold">{quizSet.name}</h1>
           <p className="text-gray-500 dark:text-gray-400 text-sm">
-            {quizSet.questions.length} question{quizSet.questions.length !== 1 ? "s" : ""}
+            {quizSet.questions.length} ข้อ
           </p>
         </div>
         <Link
@@ -57,20 +57,20 @@ function AddQuestionContent() {
           className="py-2 px-4 bg-gray-200 dark:bg-gray-700 rounded-lg font-medium
             hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors"
         >
-          ← Back
+          ← กลับ
         </Link>
       </header>
 
       {/* Upload form */}
       <section className="p-5 border border-gray-200 dark:border-gray-700 rounded-xl space-y-4">
-        <h2 className="text-xl font-semibold">Add New Question</h2>
+        <h2 className="text-xl font-semibold">เพิ่มคำถามใหม่</h2>
         <UploadForm onAdd={handleAdd} />
       </section>
 
       {/* Existing questions */}
       {quizSet.questions.length > 0 && (
         <section className="space-y-4">
-          <h2 className="text-xl font-semibold">Questions</h2>
+          <h2 className="text-xl font-semibold">คำถามทั้งหมด</h2>
           <div className="grid gap-4 sm:grid-cols-2">
             {quizSet.questions.map((q, i) => (
               <div
@@ -86,14 +86,14 @@ function AddQuestionContent() {
                 />
                 <div className="p-3 space-y-2">
                   <p className="text-sm">
-                    <span className="font-medium">Answers: </span>
+                    <span className="font-medium">คำตอบ: </span>
                     {q.answers.join(", ")}
                   </p>
                   <button
                     onClick={() => handleDeleteQuestion(q.id)}
                     className="text-sm text-red-600 dark:text-red-400 hover:underline"
                   >
-                    Delete
+                    ลบ
                   </button>
                 </div>
               </div>
@@ -107,7 +107,7 @@ function AddQuestionContent() {
 
 export default function AddQuestionPage() {
   return (
-    <Suspense fallback={<div className="min-h-screen p-4 max-w-2xl mx-auto pt-12 text-center text-gray-500">Loading…</div>}>
+    <Suspense fallback={<div className="min-h-screen p-4 max-w-2xl mx-auto pt-12 text-center text-gray-500">กำลังโหลด…</div>}>
       <AddQuestionContent />
     </Suspense>
   );

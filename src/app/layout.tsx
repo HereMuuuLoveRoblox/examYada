@@ -13,8 +13,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "ExamYada — Image Quiz Maker",
-  description: "Create image-based quizzes and test your memory",
+  title: "ExamYada — ระบบทดสอบความจำด้วยรูปภาพ",
+  description: "สร้างข้อสอบรูปภาพและทดสอบความจำของคุณ",
 };
 
 export default function RootLayout({

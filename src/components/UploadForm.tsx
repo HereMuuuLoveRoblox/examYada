@@ -20,7 +20,7 @@ export default function UploadForm({ onAdd }: Props) {
   const processImage = useCallback((file: File): Promise<string> => {
     return new Promise((resolve, reject) => {
       if (file.size > MAX_IMAGE_SIZE * 5) {
-        reject(new Error("Image file is too large (max ~10 MB raw)."));
+        reject(new Error("ไฟล์รูปภาพมีขนาดใหญ่เกินไป (สูงสุด ~10 MB)"));
         return;
       }
 
@@ -47,10 +47,10 @@ export default function UploadForm({ onAdd }: Props) {
           const base64 = canvas.toDataURL("image/jpeg", 0.7);
           resolve(base64);
         };
-        img.onerror = () => reject(new Error("Failed to read image."));
+        img.onerror = () => reject(new Error("ไม่สามารถอ่านรูปภาพได้"));
         img.src = reader.result as string;
       };
-      reader.onerror = () => reject(new Error("Failed to read file."));
+      reader.onerror = () => reject(new Error("ไม่สามารถอ่านไฟล์ได้"));
       reader.readAsDataURL(file);
     });
   }, []);
@@ -73,7 +73,7 @@ export default function UploadForm({ onAdd }: Props) {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!preview) {
-      setError("Please upload an image.");
+      setError("กรุณาอัปโหลดรูปภาพ");
       return;
     }
     const parsed = answers
@@ -81,7 +81,7 @@ export default function UploadForm({ onAdd }: Props) {
       .map((a) => a.trim())
       .filter(Boolean);
     if (parsed.length === 0) {
-      setError("Please enter at least one answer.");
+      setError("กรุณากรอกคำตอบอย่างน้อย 1 คำ");
       return;
     }
     onAdd(preview, parsed);
@@ -96,7 +96,7 @@ export default function UploadForm({ onAdd }: Props) {
     <form onSubmit={handleSubmit} className="space-y-4">
       {/* Image upload */}
       <div>
-        <label className="block text-sm font-medium mb-1">Upload Image</label>
+        <label className="block text-sm font-medium mb-1">อัปโหลดรูปภาพ</label>
         <input
           ref={fileRef}
           type="file"
@@ -109,7 +109,7 @@ export default function UploadForm({ onAdd }: Props) {
         />
       </div>
 
-      {loading && <p className="text-sm text-gray-500">Processing image…</p>}
+      {loading && <p className="text-sm text-gray-500">กำลังประมวลผลรูปภาพ…</p>}
 
       {/* Preview */}
       {preview && (
@@ -122,13 +122,13 @@ export default function UploadForm({ onAdd }: Props) {
       {/* Answers */}
       <div>
         <label className="block text-sm font-medium mb-1">
-          Answers (comma separated)
+          คำตอบที่ถูกต้อง (คั่นด้วยเครื่องหมายจุลภาค)
         </label>
         <input
           type="text"
           value={answers}
           onChange={(e) => setAnswers(e.target.value)}
-          placeholder="e.g. dog, puppy"
+          placeholder="เช่น หมา, สุนัข, dog"
           className="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600
             bg-white dark:bg-gray-800 text-base focus:ring-2 focus:ring-blue-500
             focus:border-transparent outline-none"
@@ -143,7 +143,7 @@ export default function UploadForm({ onAdd }: Props) {
         className="w-full py-3 px-6 bg-blue-600 hover:bg-blue-700 text-white font-semibold
           rounded-xl text-lg transition-colors disabled:opacity-50"
       >
-        Add Question
+        เพิ่มคำถาม
       </button>
     </form>
   );

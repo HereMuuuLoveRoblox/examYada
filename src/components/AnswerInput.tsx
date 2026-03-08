@@ -24,13 +24,13 @@ export default function AnswerInput({ onSubmit, disabled }: Props) {
 
   return (
     <form onSubmit={handleSubmit} className="space-y-3">
-      <label className="block text-sm font-medium">Your Answer</label>
+      <label className="block text-sm font-medium">คำตอบของคุณ</label>
       <input
         ref={inputRef}
         type="text"
         value={value}
         onChange={(e) => setValue(e.target.value)}
-        placeholder="Type your answer…"
+        placeholder="พิมพ์คำตอบที่นี่…"
         disabled={disabled}
         className="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600
           bg-white dark:bg-gray-800 text-lg focus:ring-2 focus:ring-blue-500
@@ -42,7 +42,7 @@ export default function AnswerInput({ onSubmit, disabled }: Props) {
         className="w-full py-3 px-6 bg-green-600 hover:bg-green-700 text-white font-semibold
           rounded-xl text-lg transition-colors disabled:opacity-50"
       >
-        Submit
+        ส่งคำตอบ
       </button>
     </form>
   );
